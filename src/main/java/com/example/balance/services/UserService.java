@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -48,6 +47,7 @@ public class UserService {
         user.setUsername(loginForm.getUsername());
         user.setPassword(digest.calcDigest(loginForm.getPassword()));
         user.setToken(generateUniqueToken());
+
         em.persist(user);
        return user;
     }
@@ -113,4 +113,15 @@ public class UserService {
         return token;
     }
 
+    public User findUserById(long id) {
+        return userRepository.findUserById( id);
+    }
+
+    @Transactional
+    public User deleteUser(long id) {
+        User user = userRepository.findUserById( id);
+        em.remove(user);
+        return user;
+
+    }
 }

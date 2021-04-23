@@ -18,5 +18,3 @@ public class Balance {
     private double balance;
 
 }
-// f84aa644af6dc204e5a12c671c75d98d
-// f84aa644af6dc204e5a12c671c75d98d

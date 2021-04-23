@@ -7,15 +7,10 @@ import com.example.balance.services.UserService;
 import com.example.balance.utils.Digest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 @RestController
@@ -86,5 +81,25 @@ public class AuthController {
             return ResponseEntity.status(401).body("No authorization");
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> getUser( @PathVariable long id ) {
+        User user = userService.findUserById(id);
+
+        if (user == null) {
+            return ResponseEntity.status(401).body("Not found");
+        }
+
+        return ResponseEntity.ok(user);
+    }
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<?> deleteUser( @PathVariable long id ) {
+        User user = userService.deleteUser(id);
+
+        if (user == null) {
+            return ResponseEntity.status(401).body("Not found");
+        }
+
+        return ResponseEntity.ok(user);
+    }
 
 }
